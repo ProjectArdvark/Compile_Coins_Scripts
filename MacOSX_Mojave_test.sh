@@ -21,7 +21,7 @@ sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=`pwd`/d
 sudo make install
 cd ../../
 sudo ./autogen.sh
-sudo ./configure --prefix=`pwd`/depends/x86_64-apple-darwin14
+sudo ./configure --disable-online-rust --prefix=`pwd`/depends/x86_64-apple-darwin14
 sudo make -j2
 sudo make deploy
 echo "No strip required for this file! DMG file is located in the same folder as this script."
