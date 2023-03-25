@@ -7,6 +7,8 @@ sudo mkdir SDKs
 cd SDKs
 sudo wget -c https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX10.15.sdk.tar.xz
 sudo tar -xf MacOSX10.15.sdk.tar.xz
+sudo wget https://media.spectresecurity.io/files/Xcode-11.3.1-11C505-extracted-SDK-with-libcxx-headers.tar.gz
+sudo tar -xf Xcode-11.3.1-11C505-extracted-SDK-with-libcxx-headers.tar.gz
 cd ..
 sudo make -j2 HOST=x86_64-apple-darwin14
 cd ..
