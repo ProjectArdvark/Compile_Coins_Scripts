@@ -1,11 +1,12 @@
 #!/bin/sh
 # Define Aardvark includes
 source /usr/local/bin/Aardvark/core_system/aardvark_settings.config
-
+updatedb
 # Specify the path where you want to work
 work_dir="$(pwd)"
 
 # Continue with the rest of the script
+cd depends
 mkdir SDKs
 cd SDKs
 wget -c https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX10.15.sdk.tar.xz
