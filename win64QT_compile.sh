@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/bin/bash
+clear
+
+echo "Running"
 
 PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
 
