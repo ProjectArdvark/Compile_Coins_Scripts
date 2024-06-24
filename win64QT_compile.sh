@@ -1,8 +1,6 @@
 #!/bin/bash
 clear
 
-echo "Running"
-
 PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
 
 # Define Aardvark includes
@@ -13,7 +11,7 @@ work_dir="$(pwd)"
 
 # Continue with the rest of the script
 cd depends
-make -j2 HOST=x86_64-w64-mingw32
+make -j2 HOST=x86_64-w64-mingw32 
 cd ..
 
 ./autogen.sh
@@ -32,3 +30,6 @@ cd "$work_dir" || { echo "Failed to change directory to $work_dir. Exiting."; ex
 make -j2
 
 echo "Remember to strip the QT file!"
+
+# Another example log message
+log_message "Script finished."
