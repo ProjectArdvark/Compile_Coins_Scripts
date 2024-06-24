@@ -1,20 +1,31 @@
 #!/bin/sh
-sudo make clean
-sudo apt-get update
-sudo apt-get -y upgrade
+
 PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
-cd `pwd`/depends
-sudo make -j2 HOST=x86_64-w64-mingw32
+
+# Define Aardvark includes
+source /usr/local/bin/Aardvark/core_system/aardvark_settings.config
+
+# Specify the path where you want to work
+work_dir="$(pwd)"
+
+# Continue with the rest of the script
+cd depends
+make -j2 HOST=x86_64-w64-mingw32
 cd ..
-sudo ./autogen.sh
-sudo mkdir db4
-sudo wget -c 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
-sudo tar -xzvf db-4.8.30.NC.tar.gz
+
+./autogen.sh
+mkdir "$(work_dir)"/db4
+wget -c 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
+tar -xzvf db-4.8.30.NC.tar.gz
 cd db-4.8.30.NC/build_unix/
-sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=`pwd`/db4
-sudo make install
-cd ../../
-sudo ./autogen.sh
-sudo ./configure --disable-online-rust LDFLAGS="-L`pwd`/db4/lib/" CPPFLAGS="-I`pwd`/db4/include/" --prefix=`pwd`/depends/x86_64-w64-mingw32
-sudo make -j2
+../dist/configure --enable-cxx --disable-shared --with-pic --prefix="$(pwd)"/db4
+make install
+
+# Change directory to the specified path
+cd "$work_dir" || { echo "Failed to change directory to $work_dir. Exiting."; exit 1; }
+
+./autogen.sh
+./configure --disable-online-rust LDFLAGS="-L`pwd`/db4/lib/" CPPFLAGS="-I`pwd`/db4/include/" --prefix=`pwd`/depends/x86_64-w64-mingw32
+make -j2
+
 echo "Remember to strip the QT file!"
