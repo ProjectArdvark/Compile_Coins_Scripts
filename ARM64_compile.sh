@@ -1,5 +1,4 @@
 #!/bin/sh
-make clean
 chmod 777 -R *
 cd `pwd`/depends
 make -j2 HOST=aarch64-linux-gnu
