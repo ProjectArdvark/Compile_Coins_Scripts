@@ -1,6 +1,6 @@
 #!/bin/bash
 # Define Aardvark includes
-
+find ./ -type f -print0 | xargs -0 dos2unix --
 updatedb
 chmod -R 775 *
 cd `pwd`/depends
@@ -26,7 +26,7 @@ chmod -R 775 *
 make install
 cd ../../
 ./autogen.sh
-./configure --prefix=`pwd`/depends/x86_64-apple-darwin11
+./configure --disable-online-rust --prefix=`pwd`/depends/x86_64-apple-darwin11
 updatedb
 chmod -R 775 *
 make -j2
