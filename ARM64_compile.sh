@@ -1,20 +1,18 @@
 #!/bin/sh
-sudo make clean
+make clean
 chmod 777 -R *
-sudo apt-get update
-sudo apt-get -y upgrade
 cd `pwd`/depends
-sudo make -j2 HOST=aarch64-linux-gnu
+make -j2 HOST=aarch64-linux-gnu
 cd ..
-sudo ./autogen.sh
-sudo mkdir `pwd`/db4
-sudo wget -c 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
-sudo tar -xzvf db-4.8.30.NC.tar.gz
+./autogen.sh
+mkdir `pwd`/db4
+wget -c 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
+tar -xzvf db-4.8.30.NC.tar.gz
 cd `pwd`/db-4.8.30.NC/build_unix/
-sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=`pwd`/db4
-sudo make install
+../dist/configure --enable-cxx --disable-shared --with-pic --prefix=`pwd`/db4
+make install
 cd ../../
-sudo ./autogen.sh
-sudo ./configure LDFLAGS="-L`pwd`/db4/lib/" CPPFLAGS="-I`pwd`/db4/include/" --prefix=`pwd`/depends/aarch64-linux-gnu --enable-glibc-back-compat --enable-reduce-exports LDFLAGS=-static-libstdc++
-sudo make -j2
+./autogen.sh
+./configure --disable-online-rust LDFLAGS="-L`pwd`/db4/lib/" CPPFLAGS="-I`pwd`/db4/include/" --prefix=`pwd`/depends/aarch64-linux-gnu --enable-glibc-back-compat --enable-reduce-exports LDFLAGS=-static-libstdc++
+make -j2
 echo "Remember to strip the daemon, cli, and tx files!"
